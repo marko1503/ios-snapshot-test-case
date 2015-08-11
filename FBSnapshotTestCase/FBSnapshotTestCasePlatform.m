@@ -22,10 +22,8 @@ BOOL FBSnapshotTestCaseIs64Bit(void)
 NSOrderedSet *FBSnapshotTestCaseDefaultSuffixes(void)
 {
   NSMutableOrderedSet *suffixesSet = [[NSMutableOrderedSet alloc] init];
-  [suffixesSet addObject:@"_32"];
-  [suffixesSet addObject:@"_64"];
-  if (FBSnapshotTestCaseIs64Bit()) {
-    return [suffixesSet reversedOrderedSet];
-  } 
+  CGFloat screenWidth = [[UIScreen mainScreen] applicationFrame].size.width;
+  NSString *suffix = [NSString stringWithFormat:@"_%.0f_iOS_%ld", screenWidth, [[[UIDevice currentDevice] systemVersion] integerValue]];
+  [suffixesSet addObject:suffix]; 
   return [suffixesSet copy];
 }
